@@ -1,0 +1,71 @@
+{
+    "name": "octopus-energy-forecast",
+    "scripts": {},
+    "env": {
+    "S3_ENABLED": {
+        "description": "Enable to upload & serve static and media files from S3",
+        "value": "True"
+        },
+      "ACCOUNT_NUMBER": {
+        "required": true
+      },
+      "API_KEY": {
+        "required": true
+      },
+      "BUCKETEER_AWS_ACCESS_KEY_ID": {
+        "required": true
+      },
+      "BUCKETEER_AWS_REGION": {
+        "required": true
+      },
+      "BUCKETEER_AWS_SECRET_ACCESS_KEY": {
+        "required": true
+      },
+      "BUCKETEER_BUCKET_NAME": {
+        "required": true
+      },
+      "DJANGO_SECRET_KEY": {
+        "required": true
+      },
+      "ELECTRIC_METER_SERIAL_NUMBER": {
+        "required": true
+      },
+      "GAS_METER_SERIAL_NUMBER": {
+        "required": true
+      },
+      "HEROKU_POSTGRESQL_AMBER_URL": {
+        "required": true
+      },
+      "MPAN": {
+        "required": true
+      },
+      "MPRN": {
+        "required": true
+      },
+      "WEATHER_API_KEY": {
+        "required": true
+      },
+      "WEATHER_LOCATION": {
+        "required": true
+      }
+    },
+    "formation": {
+      "web": {
+        "quantity": 1
+      }
+    },
+    "addons": [
+      "bucketeer",
+      "heroku-postgresql",
+      "heroku-postgresql"
+    ],
+    "buildpacks": [
+      {
+        "url": "heroku/nodejs"
+      },
+      {
+        "url": "heroku/python"
+      }
+    ],
+    "stack": "heroku-22"
+  }
