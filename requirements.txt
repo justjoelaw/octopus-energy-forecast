@@ -19,7 +19,6 @@ curlify==2.2.1
 cycler==0.11.0
 debugpy==1.5.1
 decorator==5.1.1
-decouple==0.0.7
 defusedxml==0.7.1
 dj-database-url==1.2.0
 Django==4.1.5
@@ -82,6 +81,7 @@ pyparsing==3.0.9
 pyrsistent==0.18.0
 PySocks==1.7.1
 python-dateutil==2.8.2
+python-decouple==3.7
 python-dotenv==0.21.0
 pytz==2022.7
 # pywin32==305.1
