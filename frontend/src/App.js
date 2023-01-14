@@ -48,7 +48,7 @@ function App() {
 
   // Fetch latest plots
   const fetchPlotListLatest = async () => {
-    const res = await fetch('http://127.0.0.1:8000/api/plots?latest_only=true')
+    const res = await fetch('/api/plots?latest_only=true')
     const data = await res.json()
 
     return data
@@ -56,7 +56,7 @@ function App() {
 
   // Update Gas
   const updateGas = async () => {
-    const res = await fetch('http://127.0.0.1:8000/api/update_gas', {
+    const res = await fetch('/api/update_gas', {
     method: 'POST'
     })
     console.log(await res.text())
@@ -64,7 +64,7 @@ function App() {
 
   // Update Electric
   const updateElectric = async () => {
-    const res = await fetch('http://127.0.0.1:8000/api/update_electric', {
+    const res = await fetch('/api/update_electric', {
     method: 'POST'
     })
     console.log(await res.text())
@@ -72,7 +72,7 @@ function App() {
 
   // Update Weather
   const updateWeather = async () => {
-    const res = await fetch('http://127.0.0.1:8000/api/update_weather', {
+    const res = await fetch('/api/update_weather', {
     method: 'POST'
     })
     console.log(await res.text())
@@ -80,7 +80,7 @@ function App() {
 
   // Generate Plot
   const generatePlot = async (plot_type, prediction_on='') => {
-    const res = await fetch('http://127.0.0.1:8000/api/generate_plot', {
+    const res = await fetch('/api/generate_plot', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
