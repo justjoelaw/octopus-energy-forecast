@@ -29,7 +29,7 @@ REAL_BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-x3@y59ej@no_6*w&be7sx1cn&tdqn#@@g-6iay*io6-f_$2=_h'
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -169,10 +169,3 @@ CORS_ORIGIN_WHITELIST = (
 MEDIA_URL = '/media/'
 # Path where media is stored
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-
-
-# try to load local_settings.py if it exists
-try:
-  from local_settings import *
-except Exception as e:
-  pass
