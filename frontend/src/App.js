@@ -5,6 +5,8 @@ import Prediction from './components/Prediction'
 
 function App() {
 
+  const csrftoken = getCookie('csrftoken');
+
   const [historicPlots, setHistoricPlots] = useState([])
 
   const [showPredictions, setShowPredictions] = useState(false)
@@ -26,11 +28,11 @@ function App() {
 
     // Create latest plots
     const createLatestPlots = async () => {
-      await updateGas()
-      await updateElectric()
-      await updateWeather()
-      const latest_gas_result = await generatePlot('gas')
-      const latest_electric_result = await generatePlot('electric')
+      await updateGas(csrftoken)
+      await updateElectric(csrftoken)
+      await updateWeather(csrftoken)
+      const latest_gas_result = await generatePlot(csrftoken, 'gas')
+      const latest_electric_result = await generatePlot(csrftoken, 'electric')
       setHistoricPlots([latest_gas_result['plot'], latest_electric_result['plot']])
 
     }
@@ -46,6 +48,22 @@ function App() {
 
   }, [])
 
+  // Get Cookie
+  function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
   // Fetch latest plots
   const fetchPlotListLatest = async () => {
     const res = await fetch('/api/plots?latest_only=true')
@@ -55,35 +73,52 @@ function App() {
   }
 
   // Update Gas
-  const updateGas = async () => {
+  const updateGas = async (csrftoken) => {
     const res = await fetch('/api/update_gas', {
-    method: 'POST'
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'X-CSRFToken': csrftoken
+    }
     })
     console.log(await res.text())
   }
 
   // Update Electric
-  const updateElectric = async () => {
+  const updateElectric = async (csrftoken) => {
     const res = await fetch('/api/update_electric', {
-    method: 'POST'
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'X-CSRFToken': csrftoken
+    }
     })
     console.log(await res.text())
   }
 
   // Update Weather
-  const updateWeather = async () => {
+  const updateWeather = async (csrftoken) => {
     const res = await fetch('/api/update_weather', {
-    method: 'POST'
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'X-CSRFToken': csrftoken
+    }
     })
     console.log(await res.text())
   }
 
   // Generate Plot
-  const generatePlot = async (plot_type, prediction_on='') => {
+  const generatePlot = async (csrftoken, plot_type, prediction_on='') => {
     const res = await fetch('/api/generate_plot', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken
       },
       body: JSON.stringify({
           'plot_type': plot_type,
@@ -100,11 +135,11 @@ function App() {
   
     setShowPredictions(true)
 
-    const result_electric = await generatePlot('prediction', 'electric')
+    const result_electric = await generatePlot(csrftoken, 'prediction', 'electric')
     setElectricPrediction(await result_electric['prediction'])
     setElectricPredictionPlot(await result_electric['plot'])
 
-    const result_gas = await generatePlot('prediction', 'gas')
+    const result_gas = await generatePlot(csrftoken, 'prediction', 'gas')
     setGasPrediction(await result_gas['prediction'])
     setGasPredictionPlot(await result_gas['plot']) 
 
