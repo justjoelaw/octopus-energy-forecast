@@ -14,6 +14,10 @@ from pathlib import Path
 import os
 import environ
 import dj_database_url
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,7 +34,7 @@ SECRET_KEY = 'django-insecure-x3@y59ej@no_6*w&be7sx1cn&tdqn#@@g-6iay*io6-f_$2=_h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['octopus-energy-forecast.herokuapp.com', '127.0.0.1:8000', '127.0.0.1']
+ALLOWED_HOSTS = ['octopus-energy-forecast.herokuapp.com', '127.0.0.1:8000', '127.0.0.1', 'http://localhost:8000']
 
 
 
@@ -86,10 +90,15 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "octopus_energy_forecast",
+        "USER": "justj",
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+        "HOST": "localhost",
+        "PORT": 5432,  # default postgres port
     }
 }
 
@@ -160,3 +169,10 @@ CORS_ORIGIN_WHITELIST = (
 MEDIA_URL = '/media/'
 # Path where media is stored
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+
+# try to load local_settings.py if it exists
+try:
+  from local_settings import *
+except Exception as e:
+  pass
