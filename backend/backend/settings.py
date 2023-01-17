@@ -50,9 +50,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
     'energy_tracker',
-    'rest_framework',
-    'storages'
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -188,7 +188,7 @@ class PrivateMediaStorage(S3Boto3Storage):
     file_overwrite = False
     custom_domain = False
 
-    
+
 if S3_ENABLED:
     AWS_ACCESS_KEY_ID = config('BUCKETEER_AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = config('BUCKETEER_AWS_SECRET_ACCESS_KEY')
@@ -203,42 +203,20 @@ if not LOCAL_SERVE_STATIC_FILES:
     STATIC_DEFAULT_ACL = 'public-read'
     STATIC_LOCATION = 'static'
     STATIC_URL = f'{AWS_S3_ENDPOINT_URL}/{STATIC_LOCATION}/'
-    STATICFILES_STORAGE = StaticStorage
+    STATICFILES_STORAGE = 'backend.utils.storage_backends.StaticStorage'
 
 if not LOCAL_SERVE_MEDIA_FILES:
     PUBLIC_MEDIA_DEFAULT_ACL = 'public-read'
     PUBLIC_MEDIA_LOCATION = 'media/public'
 
     MEDIA_URL = f'{AWS_S3_ENDPOINT_URL}/{PUBLIC_MEDIA_LOCATION}/'
-    DEFAULT_FILE_STORAGE = PublicMediaStorage
+    DEFAULT_FILE_STORAGE = 'backend.utils.storage_backends.PublicMediaStorage'
     
 
     PRIVATE_MEDIA_DEFAULT_ACL = 'private'
     PRIVATE_MEDIA_LOCATION = 'media/private'
-    PRIVATE_FILE_STORAGE = PrivateMediaStorage
+    PRIVATE_FILE_STORAGE = 'backend.utils.storage_backends.PrivateMediaStorage'
 
-class StaticStorage(S3Boto3Storage):
-    """Used to manage static files for the web server"""
-    location = 'static'
-    default_acl = 'public-read'
-
-
-class PublicMediaStorage(S3Boto3Storage):
-    """Used to store & serve dynamic media files with no access expiration"""
-    location = 'media/public'
-    default_acl = 'public-read'
-    file_overwrite = False
-
-
-class PrivateMediaStorage(S3Boto3Storage):
-    """
-    Used to store & serve dynamic media files using access keys
-    and short-lived expirations to ensure more privacy control
-    """
-    location = 'private'
-    default_acl = 'media/private'
-    file_overwrite = False
-    custom_domain = False
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
