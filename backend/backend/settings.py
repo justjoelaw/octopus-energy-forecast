@@ -15,7 +15,7 @@ import os
 import environ
 import dj_database_url
 from dotenv import load_dotenv
-from backend.utils.storage_backends import PublicMediaStorage, PrivateMediaStorage, StaticStorage
+from storages.backends.s3boto3 import S3Boto3Storage
 
 
 load_dotenv()
@@ -165,6 +165,30 @@ LOCAL_SERVE_STATIC_FILES = config('LOCAL_SERVE_STATIC_FILES', cast=bool, default
 if (not LOCAL_SERVE_MEDIA_FILES or not LOCAL_SERVE_STATIC_FILES) and not S3_ENABLED:
     raise ValueError('S3_ENABLED must be true if either media or static files are not served locally')
 
+class StaticStorage(S3Boto3Storage):
+    """Used to manage static files for the web server"""
+    location = 'static'
+    default_acl = 'public-read'
+
+
+class PublicMediaStorage(S3Boto3Storage):
+    """Used to store & serve dynamic media files with no access expiration"""
+    location = 'media/public'
+    default_acl = 'public-read'
+    file_overwrite = False
+
+
+class PrivateMediaStorage(S3Boto3Storage):
+    """
+    Used to store & serve dynamic media files using access keys
+    and short-lived expirations to ensure more privacy control
+    """
+    location = 'private'
+    default_acl = 'media/private'
+    file_overwrite = False
+    custom_domain = False
+
+    
 if S3_ENABLED:
     AWS_ACCESS_KEY_ID = config('BUCKETEER_AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = config('BUCKETEER_AWS_SECRET_ACCESS_KEY')
@@ -193,6 +217,28 @@ if not LOCAL_SERVE_MEDIA_FILES:
     PRIVATE_MEDIA_LOCATION = 'media/private'
     PRIVATE_FILE_STORAGE = PrivateMediaStorage
 
+class StaticStorage(S3Boto3Storage):
+    """Used to manage static files for the web server"""
+    location = 'static'
+    default_acl = 'public-read'
+
+
+class PublicMediaStorage(S3Boto3Storage):
+    """Used to store & serve dynamic media files with no access expiration"""
+    location = 'media/public'
+    default_acl = 'public-read'
+    file_overwrite = False
+
+
+class PrivateMediaStorage(S3Boto3Storage):
+    """
+    Used to store & serve dynamic media files using access keys
+    and short-lived expirations to ensure more privacy control
+    """
+    location = 'private'
+    default_acl = 'media/private'
+    file_overwrite = False
+    custom_domain = False
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
