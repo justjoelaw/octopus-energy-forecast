@@ -15,6 +15,7 @@ import os
 import environ
 import dj_database_url
 from dotenv import load_dotenv
+from backend.utils.storage_backends import PublicMediaStorage, PrivateMediaStorage, StaticStorage
 
 
 load_dotenv()
@@ -178,18 +179,19 @@ if not LOCAL_SERVE_STATIC_FILES:
     STATIC_DEFAULT_ACL = 'public-read'
     STATIC_LOCATION = 'static'
     STATIC_URL = f'{AWS_S3_ENDPOINT_URL}/{STATIC_LOCATION}/'
-    STATICFILES_STORAGE = 'backend.utils.storage_backends.StaticStorage'
+    STATICFILES_STORAGE = StaticStorage
 
 if not LOCAL_SERVE_MEDIA_FILES:
     PUBLIC_MEDIA_DEFAULT_ACL = 'public-read'
     PUBLIC_MEDIA_LOCATION = 'media/public'
 
     MEDIA_URL = f'{AWS_S3_ENDPOINT_URL}/{PUBLIC_MEDIA_LOCATION}/'
-    DEFAULT_FILE_STORAGE = 'backend.utils.storage_backends.PublicMediaStorage'
+    DEFAULT_FILE_STORAGE = PublicMediaStorage
+    
 
     PRIVATE_MEDIA_DEFAULT_ACL = 'private'
     PRIVATE_MEDIA_LOCATION = 'media/private'
-    PRIVATE_FILE_STORAGE = 'backend.utils.storage_backends.PrivateMediaStorage'
+    PRIVATE_FILE_STORAGE = PrivateMediaStorage
 
 
 # Default primary key field type

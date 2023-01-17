@@ -108,11 +108,12 @@ def update_gas(request):
 
         for result in gas_json['results']:
             historical_gas, created = Historical_Gas.objects.get_or_create(
-            date = result['interval_start'].split('T')[0],
-            consumption = result['consumption']
+            date = result['interval_start'].split('T')[0]
             )
 
             if created:
+                historical_gas.consumption = result['consumption']
+                historical_gas.save()
                 created_records += 1
 
         return HttpResponse(f'Created {created_records} records in the Historical_gas table')
@@ -140,11 +141,12 @@ def update_electric(request):
 
         for result in electric_json['results']:
             historical_electric, created = Historical_Electric.objects.get_or_create(
-            date = result['interval_start'].split('T')[0],
-            consumption = result['consumption']
+            date = result['interval_start'].split('T')[0]
             )
 
             if created:
+                historical_electric.consumption = result['consumption']
+                historical_electric.save()
                 created_records += 1
 
         return HttpResponse(f'Created {created_records} records in the Historical_electric table')
