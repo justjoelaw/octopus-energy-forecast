@@ -181,7 +181,11 @@ function App() {
       <p>My aim with this app was to use data from the Octopus Energy API and combine it with data from 'weatherapi', to:</p>
       <ul>
         <li>Show energy usage for the past 60 days, plotted against average daily temperature</li>
-        <li>Predict energy usage over the next 7 days, by running a simple linear regression based on forecasted daily average temperature, and day-of-the-week</li>
+        <li>Predict energy usage over the next 7 days, by running a simple linear regression model with two inputs:</li>
+        <ol className='model-inputs'>
+          <li>forecasted daily average temperature</li>
+          <li>day-of-the-week</li>
+        </ol>
       </ul>
       <div className="plots-description">
         <p>These plots show how your gas and electricty consumption has varied over the past 60 days, with the average daily temperature for each day</p>

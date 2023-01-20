@@ -24,14 +24,18 @@ const Prediction = ({prediction, historic}) => {
       return parseFloat(result).toFixed(2)
     }
 
+    const historic_average = calculate_historic_average(historic)
+    const predicted_average = prediction.sum_predicted_usage / 7
+    const percent_change_in_average = ((predicted_average - historic_average) / historic_average) * 100
+
+
   return (
     <div>
       Predicted {energy_type_enum[prediction.energy_type]} usage: {parseFloat(prediction.sum_predicted_usage).toFixed(2)} {energy_unit_enum[prediction.energy_type]}
       <br />
-      Your predicted daily {energy_type_enum[prediction.energy_type]} usage this week is {parseFloat(prediction.sum_predicted_usage / 7).toFixed(2)}{energy_unit_enum[prediction.energy_type]} compared to your average of {calculate_historic_average(historic)}{energy_unit_enum[prediction.energy_type]}.
+      Your predicted daily {energy_type_enum[prediction.energy_type]} usage this week is {parseFloat(predicted_average).toFixed(2)}{energy_unit_enum[prediction.energy_type]} compared to your average of {parseFloat(historic_average).toFixed(2)}{energy_unit_enum[prediction.energy_type]}.
       This represents a
-      <span style={{ fontWeight: 'bold' }}> {parseFloat((((prediction.sum_predicted_usage / 7) - calculate_historic_average(historic)) / calculate_historic_average(historic)) *100).toFixed(2)}% </span>
-      change
+      <span style={{ fontWeight: 'bold' }}> {parseFloat(percent_change_in_average).toFixed(2)}% {percent_change_in_average > 0 ? 'increase' : 'descrease'}</span>
     </div>
   )
 }

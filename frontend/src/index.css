@@ -88,3 +88,8 @@ ul {
 .plots-description, .prediction-description {
   padding-top: 20px;
 }
+
+.model-inputs {
+  list-style-position: inside;
+  padding-left: 20px;
+}
