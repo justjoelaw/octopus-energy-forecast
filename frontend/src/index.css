@@ -67,6 +67,9 @@ body {
   opacity: 0.9;
 }
 
+ul {
+  list-style-position: inside;
+}
 
 .btn:hover {
   outline: none;
@@ -80,4 +83,8 @@ body {
 .btn-block {
   display: block;
   width: 100%;
+}
+
+.plots-description, .prediction-description {
+  padding-top: 20px;
 }

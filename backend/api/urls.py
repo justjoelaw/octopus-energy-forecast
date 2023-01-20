@@ -10,4 +10,6 @@ urlpatterns = [
     path('update_weather', views.update_weather, name='update_weather'),
     path('generate_plot', views.generate_plot, name='generate_plot'),
     path('plots', views.PlotList.as_view(), name='list_plots'),
+    path('gas', views.HistoricGasList.as_view(), name='list_gas'),
+    path('electric', views.HistoricElectricList.as_view(), name='list_electric'),
 ]

@@ -17,6 +17,9 @@ function App() {
   const [gasPrediction, setGasPrediction] = useState(null)
   const [gasPredictionPlot, setGasPredictionPlot] = useState(null)
 
+  const [gasHistoric, setGasHistoric] = useState(null)
+  const [electricHistoric, setElectricHistoric] = useState(null)
+
 
   useEffect(() => {
     const getLatestPlots = async () => {
@@ -131,10 +134,32 @@ function App() {
     return result
   }
 
+  // Get Historic Gas usage
+  const getGas = async () => {
+    const res = await fetch('/api/gas')
+    const data = await res.json()
+
+    return data
+  }
+
+  // Get Historic Electric usage
+  const getElectric = async () => {
+    const res = await fetch('/api/electric')
+    const data = await res.json()
+
+    return data
+  }
+
   // Show Predictions
   const createAndShowPredictions = async () => {
   
     setShowPredictions(true)
+
+    const historic_gas = await getGas()
+    console.log(await historic_gas)
+    setGasHistoric(await historic_gas)
+    const historic_electric = await getElectric()
+    setElectricHistoric(await historic_electric)
 
     const result_electric = await generatePlot(csrftoken, 'prediction', 'electric')
     setElectricPrediction(await result_electric['prediction'])
@@ -144,8 +169,6 @@ function App() {
     setGasPrediction(await result_gas['prediction'])
     setGasPredictionPlot(await result_gas['plot']) 
 
-
-
   }
 
 
@@ -153,12 +176,16 @@ function App() {
   return (
     <div className="container">
       <h1>Octopus Energy: Forecast</h1>
-      <p>A simple project which combines data from the Octopus Energy API, with data from "weatherapi", to:</p>
+      <p>A project created using Python, Javascript, Django and React. The app is deployed on Heroku, with a postgreSQL database</p>
+      <br/>
+      <p>My aim with this app was to use data from the Octopus Energy API and combine it with data from 'weatherapi', to:</p>
       <ul>
-          <li>Show energy usage for the past 60 days, plotted against average daily temperature</li>
-          <li>Predict energy usage over the next 7 days, by running a simple linear regression based on forecasted daily average temperate, and day-of-the-week</li>
-        </ul> 
-        
+        <li>Show energy usage for the past 60 days, plotted against average daily temperature</li>
+        <li>Predict energy usage over the next 7 days, by running a simple linear regression based on forecasted daily average temperature, and day-of-the-week</li>
+      </ul>
+      <div className="plots-description">
+        <p>These plots show how your gas and electricty consumption has varied over the past 60 days, with the average daily temperature for each day</p>
+      </div>
       <div className='plots-container'>
         {historicPlots.map((plot) => 
         <Plot key={plot.id} plot={plot} />
@@ -169,14 +196,18 @@ function App() {
           <Button text='Generate Energy Forecast' onClick={createAndShowPredictions} />
       </div>
 
+      <div className='prediction-description'>
+        <p>These plots show the forecasted average daily temperature over the next 7 days, and the amount of energy we expect you to use</p>
+      </div>
+
       <div className='prediction-plots-container'>
         { gasPredictionPlot && <Plot key={gasPredictionPlot.id} plot={gasPredictionPlot} />}
         { electricPredictionPlot && <Plot key={electricPredictionPlot.id} plot={electricPredictionPlot} />}
       </div>
 
       <div className='prediction-container'>
-        { gasPrediction && <Prediction key={gasPrediction.id} prediction={gasPrediction} /> }
-        { electricPrediction && <Prediction key={electricPrediction.id} prediction={electricPrediction} /> }
+        { gasPrediction && <Prediction key={gasPrediction.id} prediction={gasPrediction} historic={gasHistoric} /> }
+        { electricPrediction && <Prediction key={electricPrediction.id} prediction={electricPrediction} historic={electricHistoric} /> }
       </div>
 
     </div>

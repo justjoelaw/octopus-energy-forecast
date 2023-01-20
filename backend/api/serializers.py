@@ -6,6 +6,16 @@ class PlotSerializer(serializers.ModelSerializer):
         model = Historical_Plots
         fields = '__all__'
 
+class GasSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Historical_Gas
+        fields = '__all__'
+
+class ElectricSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Historical_Electric
+        fields = '__all__'
+
 class PredictionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Predictions

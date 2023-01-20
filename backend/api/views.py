@@ -13,7 +13,7 @@ import io
 from django.core.files import File
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from rest_framework import generics
-from .serializers import PlotSerializer, PredictionSerializer
+from .serializers import PlotSerializer, PredictionSerializer, GasSerializer, ElectricSerializer
 from django.db.models import Q
 from django.http import JsonResponse
 
@@ -292,3 +292,18 @@ class PlotList(generics.ListAPIView):
         return queryset
 
         
+class HistoricGasList(generics.ListAPIView):
+    model = Historical_Gas
+    serializer_class = GasSerializer
+
+    def get_queryset(self):
+        queryset = Historical_Gas.objects.all().order_by('-date')[:60]
+        return queryset
+
+class HistoricElectricList(generics.ListAPIView):
+    model = Historical_Electric
+    serializer_class = ElectricSerializer
+
+    def get_queryset(self):
+        queryset = Historical_Electric.objects.all().order_by('-date')[:60]
+        return queryset
