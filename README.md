@@ -1,4 +1,4 @@
-#Octopus Energy Forecast
+# Octopus Energy Forecast
 
 This is a project created to refresh my Python and Javascript skills, as well as learn web development with Django and React
 
