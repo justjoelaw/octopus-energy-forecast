@@ -10,6 +10,9 @@ class Historical_Gas(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f'{self.date}: {self.consumption} - created: {self.created}'
+
 class Historical_Electric(models.Model):
     date = models.DateField(unique=True)
     consumption = models.FloatField(validators=[MinValueValidator(0.0)])
