@@ -35,7 +35,7 @@ const Prediction = ({prediction, historic}) => {
       <br />
       Your predicted daily {energy_type_enum[prediction.energy_type]} usage this week is {parseFloat(predicted_average).toFixed(2)}{energy_unit_enum[prediction.energy_type]} compared to your average of {parseFloat(historic_average).toFixed(2)}{energy_unit_enum[prediction.energy_type]}.
       This represents a
-      <span style={{ fontWeight: 'bold' }}> {parseFloat(percent_change_in_average).toFixed(2)}% {percent_change_in_average > 0 ? 'increase' : 'descrease'}</span>
+      <span style={{ fontWeight: 'bold' }}> {parseFloat(percent_change_in_average).toFixed(2)}% {percent_change_in_average > 0 ? 'increase' : 'decrease'}</span>
     </div>
   )
 }

@@ -36,7 +36,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['octopus-energy-forecast.herokuapp.com', '127.0.0.1:8000', '127.0.0.1', 'http://localhost:8000']
+ALLOWED_HOSTS = ['octopus-energy-forecast.herokuapp.com', '127.0.0.1:8000', '127.0.0.1', 'http://localhost:8000', 'http://localhost:5000']
 
 
 
