@@ -106,8 +106,30 @@ DATABASES = {
     }
 }
 
+
+
+if os.getenv('TEST_DATABASE'):
+    DATABASES = {
+        "default": {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'testing',
+        }
+    }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": "octopus_energy_forecast",
+            "USER": "justj",
+            "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+            "HOST": "localhost",
+            "PORT": 5432,  # default postgres port
+        }
+    }
+    
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
+
 
 
 # Password validation

@@ -6,7 +6,6 @@ from api.plots.plots import format_historical_data, create_gas_plot, create_elec
 from datetime import datetime, timedelta
 from rest_framework.test import APIRequestFactory
 from energy_tracker.models import Historical_Gas, Historical_Electric, Historical_Weather, Historical_Plots, Predictions
-from testdata import testdata
 from api.regression.regression import create_regression_model
 
 
