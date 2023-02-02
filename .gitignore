@@ -216,3 +216,5 @@ yarn-debug.log*
 yarn-error.log*
 
 local_settings.py
+
+pytest.ini
