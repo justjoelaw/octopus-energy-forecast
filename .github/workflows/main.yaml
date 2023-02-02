@@ -5,6 +5,14 @@ jobs:
     runs-on: ubuntu-latest # operating system your code will run on
     env:
       TEST_DATABASE: True
+      ACCOUNT_NUMBER: ${{ secrets.ACCOUNT_NUMBER }}
+      API_KEY: ${{ secrets.API_KEY }}
+      ELECTRIC_METER_SERIAL_NUMBER: ${{ secrets.ELECTRIC_METER_SERIAL_NUMBER }}
+      GAS_METER_SERIAL_NUMBER: ${{ secrets.GAS_METER_SERIAL_NUMBER }}
+      MPAN: ${{ secrets.MPAN }}
+      MPRN: ${{ secrets.MPRN }}
+      WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
+      WEATHER_LOCATION: ${{ secrets.WEATHER_LOCATION }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
