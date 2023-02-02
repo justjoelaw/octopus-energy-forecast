@@ -3,6 +3,8 @@ on: [push] # activates the workflow when there is a push or pull request in the 
 jobs:
   test_project:
     runs-on: ubuntu-latest # operating system your code will run on
+    env:
+      TEST_DATABASE: True
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
