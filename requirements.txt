@@ -98,7 +98,6 @@ seaborn==0.12.2
 Send2Trash==1.8.0
 setuptools==65.6.3
 six==1.16.0
-sklearn==0.0.post1
 sniffio==1.2.0
 soupsieve==2.3.2.post1
 sqlparse==0.4.3
