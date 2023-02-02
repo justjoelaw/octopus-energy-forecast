@@ -27,10 +27,7 @@ def get_gas(from_date, to_date):
     basic = HTTPBasicAuth(API_KEY, '')
 
     r = requests.get(url, params=params, auth=basic)
-    print(curlify.to_curl(r.request))
-
     if r.status_code != 200:
-        print(curlify.to_curl(r.request))
         raise ValueError(f'Request failed with status code {r.status_code}')
 
     
@@ -54,10 +51,8 @@ def get_electric(from_date, to_date):
     basic = HTTPBasicAuth(API_KEY, '')
 
     r = requests.get(url, params=params, auth=basic)
-    print(curlify.to_curl(r.request))
 
     if r.status_code != 200:
-        print(curlify.to_curl(r.request))
         raise ValueError(f'Request failed with status code {r.status_code}')
 
     

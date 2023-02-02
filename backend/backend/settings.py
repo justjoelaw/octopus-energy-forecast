@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'storages',
     'energy_tracker',
-    'rest_framework'
+    'rest_framework',
+    'coverage'
 ]
 
 MIDDLEWARE = [
